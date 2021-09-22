@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <title>All venues</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="alert-danger forms-error-bar" th:if="${deleteVenueErrorMsg !=null}">
+      <span th:text="${deleteVenueErrorMsg}"></span>
+    </div>
+    <div class="alert-danger forms-error-bar" th:if="${updateVenueErrorMsg !=null}">
+      <span th:text="${updateVenueErrorMsg}"></span>
+    </div>
+    
+    <br>
+    <h2>Search for Venues</h3>
+    
+  	<form th:object="${venue}" th:action="@{/venues/}" method = "get">
+  		<div class="input-group">
+    		<input type="text" class="form-control" name="Keyword" id="Keyword" placeholder="Search" th:value="${Keyword}" />
+    		<span class="input-group-btn">
+    			<button type="submit" class="btn btn-primary" value="Search"><i class="fas fa-search"></i></button>
+    		</span>
+    	</div>
+    </form>
+    
+    <br>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><i class="fas fa-bolt"></i> Venue</th>
+          <th><i class="fas fa-map"></i> Address</th>
+          <th><i class="fas fa-envelope"></i> Postcode </th>
+          <th><i class="fas fa-male"></i> Capacity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr th:each="v : ${venues}">
+          <td> <a th:href="@{/venues/venuepage/{num}(num=${v.id})}" th:text="${v.name}"> Venue </a></td>
+          <td th:text="${v.address}">Address</td>
+          <td th:text="${{v.postcode}}"> Postcode </td>
+		  <td th:text="${v.capacity}">Capacity</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <a class="btn btn-primary" role="button" href="/venues/addVenue"><i class="fas fa-plus" aria-hidden="true"></i> Add a new venue</a>
+    </p>
+
+  </div>
+
+</body>
+</html>

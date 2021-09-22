@@ -1,0 +1,11 @@
+uk/ac/man/cs/eventlite/controllers/EventsControllerTest.class
+uk/ac/man/cs/eventlite/config/TestPersistence.class
+uk/ac/man/cs/eventlite/controllers/EventsControllerApiTest.class
+uk/ac/man/cs/eventlite/dao/EventServiceTest.class
+uk/ac/man/cs/eventlite/controllers/EventsControllerIntegrationTest.class
+uk/ac/man/cs/eventlite/SecurityTest.class
+uk/ac/man/cs/eventlite/controllers/EventsControllerApiIntegrationTest.class
+uk/ac/man/cs/eventlite/HomePageTest.class
+uk/ac/man/cs/eventlite/SecurityIntegrationTest.class
+uk/ac/man/cs/eventlite/dao/VenueServiceTest.class
+uk/ac/man/cs/eventlite/testutil/FormUtil.class

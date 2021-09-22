@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+    <title>All events</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="/css/maps.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+<a href="/"><img src="/css/eventlite.png" border="0"></a>
+    <div class="container">
+    	<br>
+        <h2>Search for Events</h2>
+    
+        <form th:object="${event}" th:action="@{/events/}" method="get">
+        	<div class="input-group">
+           		<input type="text" class="form-control" name="Keyword" id="Keyword" placeholder="Search" th:value="${Keyword}"/>
+           		<span class="input-group-btn">
+            		<button type="submit" class="btn btn-primary" value="Search"><i class="fas fa-search"></i></button>
+            	</span>
+            </div>
+        </form>
+        
+        <br>
+        <h3>Upcoming Events</h3>
+        <div class="alert-danger forms-error-bar" th:if="${deleteEventErrorMsg !=null}">
+            <span th:text="${deleteEventErrorMsg}"></span>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th><i class="fas fa-bolt"></i> Event</th>
+                <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+                <th><i class="fas fa-calendar"></i> Date</th>
+                <th><i class="fas fa-book-open"></i> Description</th>
+                <th><i class="fas fa-clock"></i> Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${upcoming_events}">
+                <td><a th:href="@{/events/eventpage/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>
+                <td><a th:href="@{/venues/venuepage/{num}(num=${e.venue.id})}" th:text="${e.venue.name}"> Event
+                    Venue </a></td>
+                <td th:text="${{e.date}}"> Event Date</td>
+                <td th:text="${{e.description}}"> Event Description</td>
+                <td th:text="${{e.time}}">Event Time</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Previous Events</h3>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th><i class="fas fa-bolt"></i> Event</th>
+                <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+                <th><i class="fas fa-calendar"></i> Date</th>
+                <th><i class="fas fa-book-open"></i> Description</th>
+                <th><i class="fas fa-clock"></i> Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${previous_events}">
+                <td><a th:href="@{/events/eventpage/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>
+                <td><a th:href="@{/venues/venuepage/{num}(num=${e.venue.id})}" th:text="${e.venue.name}"> Event
+                    Venue </a></td>
+                <td th:text="${{e.date}}">Event Date</td>
+                <td th:text="${{e.description}}">Event Description</td>
+                <td th:text="${{e.time}}">Event Time</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <a class="btn btn-primary" role="button" href="/events/addEvent"><i class="fas fa-plus"
+                                                                                aria-hidden="true"></i> Add a new Event</a>
+        </p>
+
+		<h3>Twitter Feed</h3>
+		<table class="table table-striped table-hover">
+		  <thead>
+			<tr>
+				<th><i class ="fas fa-calendar"></i>Date</th>
+				<th><i class ="fab fa-twitter"></i>Tweet</th>
+			</tr>
+		  </thead>
+			<tbody>
+			<tr th:each="t:${allTweets}">
+				<td th:text="${t.createdAt}"> Tweet Date</td>
+				<td <a th:href="@{'https://mobile.twitter.com/EventLite21_H12/status/'+${t.id}}" th:text="${t.text}"></a></td>
+			</tr>
+			</tbody>
+		</table>
+
+
+        <div class="events_events-upcoming-map-wrapper events_events-upcoming-map-wrapper">
+            <div class="events_events-upcoming-map" id="map">
+                <script th:inline="javascript">
+
+                    if (!mapboxgl.supported()) {
+                        alert("Your browser does not suport Mapbox GL");
+                    }
+
+                    mapboxgl.accessToken = /*[[${mapbox_access_token}]]*/ "";
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11',
+                    });
+                    /*<![CDATA[*/
+                    var northMostLat = -90;
+                    var southMostLat = 90;
+
+                    var eastMostLng = -180;
+                    var westMostLng = 180;
+
+                    /*[#  th:each="e : ${upcoming_events}"  ]*/
+                    var longitude = /*[[${e.venue.longitude}]]*/ 0;
+                    var latitude = /*[[${e.venue.latitude}]]*/ 0;
+
+                    if (longitude > northMostLat) northMostLat = longitude;
+                    if (longitude < southMostLat) southMostLat = longitude;
+
+                    if (latitude > eastMostLng) eastMostLng = latitude;
+                    if (latitude < westMostLng) westMostLng = latitude;
+
+                    var eventMarker = new mapboxgl.Marker()
+                        .setLngLat([longitude, latitude])
+                        .addTo(map);
+
+                    /*[/]*/
+                    map.fitBounds([
+                        [southMostLat, westMostLng],
+                        [northMostLat, eastMostLng]
+                    ], {
+                        padding: {top: 50, bottom: 50, left: 50, right: 50}
+                    });
+
+
+                    /*]]>*/
+                </script>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

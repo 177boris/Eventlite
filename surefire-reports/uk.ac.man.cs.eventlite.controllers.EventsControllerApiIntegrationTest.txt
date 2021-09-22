@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: uk.ac.man.cs.eventlite.controllers.EventsControllerApiIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.701 s - in uk.ac.man.cs.eventlite.controllers.EventsControllerApiIntegrationTest

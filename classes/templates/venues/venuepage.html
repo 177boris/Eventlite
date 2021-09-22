@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<head>
+	<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <h2> Venue Details </h2>
+
+	<div class="alert-danger forms-error-bar" th:if="${deleteVenueErrorMsg}">
+        <span th:text="${deleteVenueErrorMsg}"></span>
+    </div>
+
+	<table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><i class="fas fa-bolt"></i> Venue </th>
+          <th><i class="fas fa-map"></i> Address </th>
+		  <th><i class="fas fa-envelope"></i> Postcode </th>
+          <th><i class="fas fa-male"></i> Capacity </th>
+          <div sec:authorize="hasAnyRole('ADMINISTRATOR', 'EVENT_ORGANISER')">
+          	<th> Update Venue </th>
+          	<th> Delete Venue </th>
+          </div>
+        </tr>
+      </thead>
+	  <tbody>
+          <td style = 'vertical-align:middle' th:text="${name}"> Venue </td>
+          <td style = 'vertical-align:middle' th:text="${address}"> Address </td>
+          <td style = 'vertical-align:middle' th:text="${postcode}"> Postcode </td>
+		  <td style = 'vertical-align:middle' th:text="${capacity}"> Capacity </td>
+		  <div sec:authorize="hasAnyRole('ADMINISTRATOR', 'EVENT_ORGANISER')">
+		  	<td>
+				<form th:action="@{'/venues/'+ ${id}}" >
+					<button type="submit" class="btn btn-info" href="/venues/updateVenue"> <i class="fas fa-pen" aria-hidden="true"></i> Update </button>
+       			</form>
+          	</td>
+		  	<td>
+		  		<form th:action="@{/venues/{id}(id=${id})}" th:method="delete">
+		  			<button type="submit" class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i> Delete </button>
+		  		</form>
+		  	</td>
+		  </div>
+	  </tbody>
+	</table>
+
+    <h3> Upcoming Events </h3>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th><i class="fas fa-bolt"></i> Event Name</th>
+            <th><i class="fas fa-calendar"></i> Date</th>
+            <th><i class="fas fa-clock"></i> Time</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="e : ${venue_upcoming_events}">
+            <td><a th:href="@{/events/eventpage/{num}(num=${e.id})}" th:text="${e.name}"> My Event </a></td>
+            <td th:text="${{e.date}}"> Event Date</td>
+            <td th:text="${{e.time}}">Event Time</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>

@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.events_eventPage-map-wrapper{
+    position: relative;
+    height: 800px;
+    width: 100%;
+}
+
+.events_events-upcoming-map-wrapper{
+    position: relative;
+    height: 600px;
+    width: 100%;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: 4px;
+    margin: 2em 0 4em 0;
+}
+
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+}
