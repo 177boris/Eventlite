@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <a href="/"><img src="/css/eventlite.png" border="0"></a>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <a href="/"><img src="/css/eventlite.png" border="0"></a>
+    <p>This is EventLite. See the <a href="/events">list of events</a> for more information.</p>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th><i class="fas fa-bolt"></i> Upcoming Event</th>
+        <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+        <th><i class="fas fa-calendar"></i> Date</th>
+        <th><i class="fas fa-clock"></i> Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="e : ${upcoming_events}">
+        <td><a th:href="@{/events/eventpage/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>
+        <td th:text="${e.venue.name}">Event venue</td>
+        <td th:text="${{e.date}}">Event date</td>
+        <td th:text="${{e.time}}">Event time</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <p>This is EventLite. See the <a href="/venues">list of venues</a> for more information.</p>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th><i class="fas fa-bolt"></i> Most Popular Venues</th>
+        <th><i class="fas fa-map"></i> Number of Events</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="v : ${popular_venues}">
+        <td><a th:href="@{/venues/venuepage/{num}(num=${v.id})}" th:text="${v.name}">Venue</a></td>
+        <td th:text="${venue_count_map.get(v.name)}">Total events</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

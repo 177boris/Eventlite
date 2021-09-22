@@ -1,0 +1,15 @@
+.forms-error-bar{
+    padding: 0.3em;
+    margin: 1em 0 1em 0;
+    border-radius: 4px;
+}
+
+.twitter_input-field{
+    width: 90% !important;
+    border-radius: .25rem 0 0 .25rem;
+}
+
+.twitter_send-button{
+    width: 10%;
+    border-radius: 0 .25rem .25rem 0;
+}

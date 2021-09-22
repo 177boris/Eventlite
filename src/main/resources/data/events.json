@@ -1,0 +1,23 @@
+[
+    {
+        "id" : 1,
+        "name" : "COMP23412 Showcase, group G",
+        "date" : "2021-05-13",
+        "time" : "16:00",
+        "venue" : 2
+    },
+    {
+        "id" : 2,
+        "name" : "COMP23412 Showcase, group H",
+        "date" : "2021-05-11",
+        "time" : "11:00",
+        "venue" : 2
+    },
+    {
+        "id" : 3,
+        "name" : "COMP23412 Showcase, group F",
+        "date" : "2021-05-10",
+        "time" : "16:00",
+        "venue" : 2
+    }
+]

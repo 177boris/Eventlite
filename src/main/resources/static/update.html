@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <title>Update event</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Update an event</h1>
+
+
+
+    <form th:action="@{/events}" th:object="${event}" method="post">
+      <div class="form-group">
+
+
+
+          <a th:href="@{/events/eventpage/{num}(num=${e.id})}" th:text="${e.name}">My Event</a>
+        <label for="event">Event name:</label>
+        <input class="form-control" type="text" required="required" name="name" id="name" placeholder="Event" autofocus="autofocus" />
+
+
+
+
+        <label for="venue" th:text="${e.venue.name}">Venue name:</label>
+        <input class="form-control" type="text" required="required" name="venue" id="venue" placeholder="Venue" autofocus="autofocus" />
+
+
+
+        <label for="date" th:text="${{e.date}}">Date:</label>
+        <input class="form-control" type="date" required="required" name="date" id="date" placeholder="Date" autofocus="autofocus" />
+
+
+
+        <label for="time" th:text="${{e.time}}">Time:</label>
+        <input class="form-control" type="time" required="required" name="time" id="time" placeholder="Time" autofocus="autofocus" />
+
+
+      </div>
+
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i>Update</button>
+      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i>Cancel</a>
+
+    </form>
+
+
+  </div>
+</body>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <title>Adding a venue</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Add a new venue</h1>
+
+    <form th:action="@{/venues}" th:object="${venue}" method="post">
+      <div class="alert-danger forms-error-bar" th:if="${errorMsg!=null && #strings.length(errorMsg)>0}">
+        <span th:text="${errorMsg}"></span>
+      </div>
+      <div class="form-group">
+        <label for="venue">Venue name:</label>
+        <input class="form-control" type="text" th:value="${venue?.getName()}" required="required" name="name" id="name" placeholder="Venue" autofocus="autofocus" />
+
+        <label for="address">Address (road name and number):</label>
+        <input class="form-control" type="text" th:value="${venue?.getAddress()}" required ="required" name="address" id ="address" placeholder ="Address" autofocus ="autofocus"/>
+
+		<label for="postcode">Postcode:</label>
+        <input class="form-control" type="text" th:value="${venue?.getPostcode()}" required="required" name="postcode" id="postcode" placeholder="Postcode" autofocus="autofocus" />
+
+		<label for="capacity">Capacity:</label>
+        <input class="form-control" type="int" th:value="${venue?.getCapacity()}" required="required" name="capacity" id="capacity" placeholder="Capacity" autofocus="autofocus" />
+
+      </div>
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i>Add this venue</button>
+      <a class="btn btn-warning" role="button" href="/venues"><i class="fas fa-ban" aria-hidden="false"></i>Cancel</a>
+    </form>
+
+  </div>
+</body>

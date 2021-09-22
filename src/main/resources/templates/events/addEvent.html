@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <title>Adding an event</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div layout:fragment="content">
+    <h1>Add a new event</h1>
+
+    <form th:action="@{/events}" th:object="${newEvent}" modelAttribute="newEvent" method="post">
+      <div class="alert-danger forms-error-bar" th:if="${errorMsg!=null && #strings.length(errorMsg)>0}">
+        <span th:text="${errorMsg}"></span>
+      </div>
+      <div class="form-group">
+        <label for="event">Event name:</label>
+        <input class="form-control" type="text" th:value="${event?.getName()}" maxlength="256" required="required" name="name" id="name" placeholder="Event" autofocus="autofocus" />
+
+        <label for="venue">Venue name:</label>
+        <select th:field="*{venue}" class="form-control" style="float:left">
+        	<option th:each="venue : ${venues}" th:value="${venue.id}" th:text="${venue.name}"></option>
+        </select><br>
+
+        <label for="date">Date:</label>
+        <input class="form-control" type="date" th:value="${event?.getDate()}" required="required" name="date" id="date" placeholder="Date" autofocus="autofocus" />
+
+        <label for="time">Time:</label>
+        <input class="form-control" type="time" th:value="${event?.getTime()}" name="time" id="time" placeholder="Time" autofocus="autofocus" />
+
+        <label for="Description">Description:</label>
+        <input class="form-control" type="text" th:value="${event?.getDescription()}" maxlength="500" name="description" id="description" placeholder="Description" autofocus="autofocus" />
+      </div>
+      <button class="btn btn-primary" type="submit"><i class="fas fa-bookmark" aria-hidden="true"></i>Add this event</button>
+      <a class="btn btn-warning" role="button" href="/events"><i class="fas fa-ban" aria-hidden="true"></i>Cancel</a>
+    </form>
+
+  </div>
+</body>
